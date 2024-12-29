@@ -1,4 +1,11 @@
-/* Custom bootstrap variables must be set or imported before bootstrap. */
-@import "bootstrap";
+// app/assets/stylesheets/application.scss
+@use "bootstrap" as *;
 
-/* Add any custom styles here */
+/* Flash message fade-out styles */
+.flash-message {
+  transition: opacity 1s ease-out;
+}
+
+.flash-message.fade-out {
+  opacity: 0;
+}

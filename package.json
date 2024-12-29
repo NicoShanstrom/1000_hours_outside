@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@hotwired/turbo-rails": "^8.0.5"
+    "@hotwired/turbo-rails": "^8.0.5",
+    "animate.css": "^4.1.1"
   }
 }

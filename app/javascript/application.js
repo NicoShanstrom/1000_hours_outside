@@ -1,24 +1,20 @@
-// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
-import "@hotwired/turbo-rails"
-import "controllers"
-import "bootstrap"
-import "../stylesheets/application"
-import "@popperjs/core"
-import { Tooltip, Toast, Popover } from 'bootstrap'
+// app/javascript/application.js
+import "@hotwired/turbo-rails";
+import "controllers";
 
-import Rails from "@rails/ujs"
-Rails.start()
-
-import { Turbo } from "@hotwired/turbo-rails"
-Turbo.session.drive = true
-
-document.addEventListener('turbo:load', function () {
-  console.log('Turbo Loaded');
-});
-
+// Ensure flash messages disappear after Turbo updates
 document.addEventListener("turbo:load", () => {
-  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new Tooltip(tooltipTriggerEl)
-  })
+  const flashMessages = document.querySelectorAll(".flash-message");
+
+  flashMessages.forEach((message) => {
+    // Add fade-out after 5 seconds
+    setTimeout(() => {
+      message.classList.add("fade-out");
+    }, 5000);
+
+    // Remove the message from DOM after fading out
+    setTimeout(() => {
+      message.remove();
+    }, 6000);
+  });
 });

@@ -4,9 +4,12 @@
   <title>1000 Hours Outside Challenge</title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
-  <%= stylesheet_link_tag 'application', 'data-turbo-track': 'reload' %>
-  <%= javascript_include_tag 'application', type: 'module', 'data-turbo-track': 'reload' %>
-  <%= javascript_include_tag 'turbo', type: 'module' %>
+
+  <!-- Importmap must be loaded before any module scripts -->
+  <%= javascript_importmap_tags %>
+  <%= javascript_include_tag "application", type: "module", "data-turbo-track": "reload" %>
+  <!-- Stylesheets -->
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
 </head>
 <body>
   <div class="container mt-4">
@@ -17,12 +20,19 @@
     <% end %>
 
     <% flash.each do |key, value| %>
-      <div class="alert alert-<%= key == 'notice' ? 'success' : 'danger' %>">
+      <div
+        class="alert alert-<%= key == 'notice' ? 'success' : 'danger' %> flash-message"
+        role="alert"
+        data-controller="flash"
+      >
         <%= value %>
       </div>
     <% end %>
 
     <%= yield %>
   </div>
+
+  <!-- Application JavaScript -->
+  <%= javascript_include_tag "application", type: "module", "data-turbo-track": "reload" %>
 </body>
 </html>
