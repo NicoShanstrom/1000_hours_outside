@@ -5,6 +5,7 @@
         <h1>1000 Hours Outside Challenge for <%= current_user.email %></h1>
       </div>
     </div>
+
     <div class="row mb-4">
       <div class="col text-center">
         <% if @current_session.present? %>
@@ -70,7 +71,13 @@
           <h2>Statistics</h2>
           <p>Total time spent outside: <%= @total_time.round(2) %> hours</p>
           <p>Average time per day: <%= @average_per_day.round(2) %> hours</p>
-          <p>Required average per day to reach 1000 hours: <%= @required_per_day.round(2) %> hours</p>
+          <% if @required_per_day == "Impossible" %>
+            <p>Required average per day to reach 1000 hours: <span class="text-danger">Not enough hours remaining in the year to achieve 1000 hours outside, try again next year!</span></p>
+          <% elsif @required_per_day == "Achieved" %>
+            <p>Required average per day to reach 1000 hours: <span class="text-success">Congratulations! You have achieved at least 1000 hours outside!</span></p>
+          <% else %>
+            <p>Required average per day to reach 1000 hours: <%= @required_per_day.round(2) %> hours</p>
+          <% end %>
           <p>On pace to achieve: <%= @pace.round(2) %> hours in the year</p>
         </div>
       </div>
