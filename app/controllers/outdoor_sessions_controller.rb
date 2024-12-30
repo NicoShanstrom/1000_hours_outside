@@ -7,9 +7,8 @@ class OutdoorSessionsController < ApplicationController
     if @outdoor_session.save
       flash[:notice] = params[:outdoor_session][:manual_creation] ? "Outdoor session created successfully" : "Outdoor session started successfully"
     else
-      flash[:alert] = @outdoor_session.errors.full_messages.join(", ")
+      flash[:alert] = @outdoor_session.errors.full_messages.to_sentence
     end
-
     redirect_to root_path
   end
 
@@ -27,9 +26,8 @@ class OutdoorSessionsController < ApplicationController
     if @outdoor_session.update(update_params)
       flash[:notice] = success_message
     else
-      flash[:alert] = @outdoor_session.errors.full_messages.join(", ")
+      flash[:alert] = @outdoor_session.errors.full_messages.to_sentence
     end
-
     redirect_to root_path
   end
 
