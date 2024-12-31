@@ -27,7 +27,7 @@ module The1000HoursOutsideApp
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     config.assets.paths << Rails.root.join("node_modules")
-
+    config.assets.paths << Rails.root.join("app/javascript")
     # Don't generate system test files.
     config.generators.system_tests = nil
   end
