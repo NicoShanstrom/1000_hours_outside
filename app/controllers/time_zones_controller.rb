@@ -2,10 +2,10 @@ class TimeZonesController < ApplicationController
   before_action :authenticate_user!
 
   def set_time_zone
-    if current_user.update(time_zone: params[:time_zone])
-      head :ok # Respond with success
+    if params[:time_zone].present? && current_user.update(time_zone: params[:time_zone])
+      render json: { status: "success" }
     else
-      head :unprocessable_entity # Respond with an error
+      render json: { status: "error", message: "Invalid time zone" }, status: :unprocessable_entity
     end
   end
 end
