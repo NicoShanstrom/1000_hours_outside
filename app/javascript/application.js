@@ -1,6 +1,14 @@
 // app/javascript/application.js
 import "@hotwired/turbo-rails";
-import "controllers";
+import { Application } from "@hotwired/stimulus";
+import FlashController from "controllers/flash_controller";
+
+const application = Application.start();
+application.register("flash", FlashController);
+
+document.addEventListener("turbo:load", () => {
+  console.log("Turbo loaded, Stimulus controllers are initialized");
+});
 
 document.addEventListener("turbo:load", () => {
   try {
@@ -18,17 +26,19 @@ document.addEventListener("turbo:load", () => {
         body: JSON.stringify({ time_zone: timeZone }),
       })
         .then((response) => {
-          if (response.ok) {
-            console.log("Time zone updated successfully");
-          } else {
-            console.error("Failed to update time zone");
+          if (!response.ok) {
+            throw new Error(`Fetch failed with status: ${response.status}`);
           }
+          return response.json();
         })
-        .catch((error) => console.error('Error updating time zone:', error));
-    } else {
-      console.error("Time zone detection failed");
+        .then((data) => {
+          console.log("Time zone updated successfully:", data);
+        })
+        .catch((error) => {
+          console.error("Fetch API error:", error);
+        });
     }
   } catch (error) {
-    console.error("Error in application.js:", error);
+    console.error("Error in time zone detection:", error);
   }
 });
