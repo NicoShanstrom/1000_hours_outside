@@ -2,11 +2,11 @@
 import "@hotwired/turbo-rails";
 import "controllers";
 
-document.addEventListener("DOMContentLoaded", () => {
-  // Get the user's time zone using the Intl API
+document.addEventListener("turbo:load", () => {
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-  // Only send the time zone to the server if it has changed or isn't set
+  console.log("Detected time zone:", timeZone); // Debugging line
+
   if (timeZone) {
     fetch('/set_time_zone', {
       method: 'POST',
@@ -15,7 +15,17 @@ document.addEventListener("DOMContentLoaded", () => {
         'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content,
       },
       body: JSON.stringify({ time_zone: timeZone }),
-    }).catch((error) => console.error('Error updating time zone:', error));
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("Time zone updated successfully");
+        } else {
+          console.error("Failed to update time zone");
+        }
+      })
+      .catch((error) => console.error('Error updating time zone:', error));
   }
 });
+
+
 
