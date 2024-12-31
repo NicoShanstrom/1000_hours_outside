@@ -32,3 +32,4 @@ document.addEventListener("turbo:load", () => {
     console.error("Error in application.js:", error);
   }
 });
+console.log("Application.js loaded"); // Debugging
