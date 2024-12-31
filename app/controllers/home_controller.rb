@@ -21,19 +21,20 @@ class HomeController < ApplicationController
     remaining_days = (Date.new(Date.current.year, 12, 31) - Date.current).to_i + 1 # Including today
     @remaining_time_in_hours = ((end_of_year - now) / 1.hour).round(2)
 
-    @required_per_day = if @total_time >= 1000
-      "Achieved"
-      elsif remaining_days > 0
-        ((1000 - @total_time) / remaining_days.to_f).round(2)
-      else
-        "Impossible"
-      end
-      
     @hours_remaining_to_goal = if @total_time >= 1000
       0
-      else
-        (1000 - @total_time).round(2)
-      end
+    else
+      (1000 - @total_time).round(2)
+    end
+
+    # Calculate required per day and handle "Impossible" logic
+    if @total_time >= 1000
+      @required_per_day = "Achieved"
+    elsif @hours_remaining_to_goal > @remaining_time_in_hours
+      @required_per_day = "Impossible"
+    else
+      @required_per_day = (@hours_remaining_to_goal / remaining_days.to_f).round(2)
+    end
 
     @pace = ((@total_time / Date.current.yday.to_f) * 365).round(2)
 
