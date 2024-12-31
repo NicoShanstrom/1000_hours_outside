@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   devise_for :users
   root to: "home#index"
   
-  resources :outdoor_sessions, only: [:create, :new, :edit, :update]
+  resources :outdoor_sessions, only: [:create, :new, :edit, :update, :destroy]
   resources :challenges, only: [:show]
 
   post 'set_time_zone', to: 'time_zones#set_time_zone'

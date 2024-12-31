@@ -16,17 +16,29 @@ class HomeController < ApplicationController
     @total_time = @current_challenge.outdoor_sessions.sum(:duration)
     @average_per_day = (@total_time / Date.current.yday.to_f).round(2)
 
+    now = Time.current
+    end_of_year = Time.zone.local(now.year, 12, 31, 23, 59, 59)
+    remaining_days = (Date.new(Date.current.year, 12, 31) - Date.current).to_i + 1 # Including today
+    @remaining_time_in_hours = ((end_of_year - now) / 1.hour).round(2)
+
     @required_per_day = if @total_time >= 1000
-                          "Achieved"
-                        elsif Date.current.yday == 365
-                          "Impossible"
-                        else
-                          ((1000 - @total_time) / (365 - Date.current.yday).to_f).round(2)
-                        end
+      "Achieved"
+      elsif remaining_days > 0
+        ((1000 - @total_time) / remaining_days.to_f).round(2)
+      else
+        "Impossible"
+      end
+      
+    @hours_remaining_to_goal = if @total_time >= 1000
+      0
+      else
+        (1000 - @total_time).round(2)
+      end
 
     @pace = ((@total_time / Date.current.yday.to_f) * 365).round(2)
 
     # Initialize a new OutdoorSession object
     @outdoor_session = OutdoorSession.new
+    @current_session = current_user.outdoor_sessions.find_by(end_time: nil)
   end
 end

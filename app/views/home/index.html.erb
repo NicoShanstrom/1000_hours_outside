@@ -9,7 +9,6 @@
     <div class="row mb-4">
       <div class="col text-center">
         <% if @current_session.present? %>
-          <!-- Stop Timer Form -->
           <div id="stop-timer-form">
             <%= form_with model: @current_session, url: outdoor_session_path(@current_session), method: :patch, local: true do |form| %>
               <div class="form-group">
@@ -18,15 +17,11 @@
                 <%= form.hidden_field :duration, value: ((Time.current - @current_session.start_time) / 1.hour).round(2) %>
               </div>
               <div class="form-group">
-                <%= form.text_area :description, placeholder: "Description", class: "form-control" %>
-              </div>
-              <div class="form-group">
                 <%= form.submit "Stop Timer", class: "btn btn-danger btn-lg btn-block" %>
               </div>
-            <% end %> <!-- This end was missing -->
+            <% end %>
           </div>
         <% else %>
-          <!-- Start Timer Form -->
           <div id="start-timer-form">
             <%= form_with model: @outdoor_session, url: outdoor_sessions_path, local: true do |form| %>
               <div class="form-group">
@@ -72,13 +67,15 @@
         <div id="statistics">
           <h2>Statistics</h2>
           <p>Total time spent outside: <%= @total_time.round(2) %> hours</p>
+          <p>Hours remaining to achieve goal: <%= @hours_remaining_to_goal %></p>
+          <p>Remaining hours in the year: <%= @remaining_time_in_hours %></p>
           <p>Average time per day: <%= @average_per_day.round(2) %> hours</p>
           <% if @required_per_day == "Impossible" %>
             <p>Required average per day to reach 1000 hours: <span class="text-danger">Not enough hours remaining in the year to achieve 1000 hours outside, try again next year!</span></p>
           <% elsif @required_per_day == "Achieved" %>
             <p>Required average per day to reach 1000 hours: <span class="text-success">Congratulations! You have achieved at least 1000 hours outside!</span></p>
           <% else %>
-            <p>Required average per day to reach 1000 hours: <%= @required_per_day.round(2) %> hours</p>
+            <p>Required average per day to reach 1000 hours: <%= @required_per_day %></p>
           <% end %>
           <p>On pace to achieve: <%= @pace.round(2) %> hours in the year</p>
         </div>
@@ -88,9 +85,9 @@
             Previous Challenges
           </button>
           <ul class="dropdown-menu" aria-labelledby="previousChallengesDropdown">
-            <% if @previous_challenges.any? %>
+            <% if @previous_challenges.present? %>
               <% @previous_challenges.each do |challenge| %>
-                <li><%= link_to "#{challenge.year} Challenge", challenge_path(challenge) %></li>
+                <li><%= link_to "#{challenge.year} Challenge", challenge_path(challenge), class: "dropdown-item" %></li>
               <% end %>
             <% else %>
               <li class="dropdown-item text-muted">No previous challenges yet</li>
@@ -129,6 +126,9 @@
                         </div>
                       <% end %>
                     </div>
+                    <%= form_with model: session, url: outdoor_session_path(session), method: :delete, data: { confirm: "Are you sure you want to delete this session?" }, local: true do %>
+                      <%= submit_tag "Delete", class: "btn btn-danger btn-sm" %>
+                    <% end %>
                   </li>
                 <% end %>
               </ul>
