@@ -9,6 +9,7 @@
     <div class="row mb-4">
       <div class="col text-center">
         <% if @current_session.present? %>
+          <!-- Stop Timer Form -->
           <div id="stop-timer-form">
             <%= form_with model: @current_session, url: outdoor_session_path(@current_session), method: :patch, local: true do |form| %>
               <div class="form-group">
@@ -22,9 +23,10 @@
               <div class="form-group">
                 <%= form.submit "Stop Timer", class: "btn btn-danger btn-lg btn-block" %>
               </div>
-            <% end %>
+            <% end %> <!-- This end was missing -->
           </div>
         <% else %>
+          <!-- Start Timer Form -->
           <div id="start-timer-form">
             <%= form_with model: @outdoor_session, url: outdoor_sessions_path, local: true do |form| %>
               <div class="form-group">
@@ -80,40 +82,59 @@
           <% end %>
           <p>On pace to achieve: <%= @pace.round(2) %> hours in the year</p>
         </div>
+
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="previousChallengesDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Previous Challenges
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="previousChallengesDropdown">
+            <% if @previous_challenges.any? %>
+              <% @previous_challenges.each do |challenge| %>
+                <li><%= link_to "#{challenge.year} Challenge", challenge_path(challenge) %></li>
+              <% end %>
+            <% else %>
+              <li class="dropdown-item text-muted">No previous challenges yet</li>
+            <% end %>
+          </ul>
+        </div>
       </div>
 
       <div class="col-md-6" style="height: 400px; overflow-y: auto;">
         <div id="sessions" class="previous-sessions">
           <h2>Previous Sessions</h2>
-          <ul>
-            <% @sessions.each do |session| %>
-              <li>
-                <strong>Start:</strong> <%= session.start_time.strftime("%B %d, %Y %I:%M %p") %>, 
-                <strong>End:</strong> <%= session.end_time.strftime("%B %d, %Y %I:%M %p") %>, 
-                <strong>Duration:</strong> <%= session.duration %> hours, 
-                <strong>Description:</strong> <%= session.description %>
-                <div class="mt-2">
-                  <%= form_with model: session, url: outdoor_session_path(session), method: :patch, local: true do |form| %>
-                    <div class="form-group">
-                      <%= form.label :start_time %>
-                      <%= form.datetime_select :start_time, class: "form-control" %>
+          <% if @sessions.present? %>
+              <ul>
+                <% @sessions.each do |session| %>
+                  <li>
+                    <strong>Start:</strong> <%= session.start_time&.strftime("%B %d, %Y %I:%M %p") || "Not available" %>, 
+                    <strong>End:</strong> <%= session.end_time&.strftime("%B %d, %Y %I:%M %p") || "Not available" %>, 
+                    <strong>Duration:</strong> <%= session.duration || "Not calculated" %> hours, 
+                    <strong>Description:</strong> <%= session.description || "No description" %>
+                    <div class="mt-2">
+                      <%= form_with model: session, url: outdoor_session_path(session), method: :patch, local: true do |form| %>
+                        <div class="form-group">
+                          <%= form.label :start_time %>
+                          <%= form.datetime_select :start_time, class: "form-control" %>
+                        </div>
+                        <div class="form-group">
+                          <%= form.label :end_time %>
+                          <%= form.datetime_select :end_time, class: "form-control" %>
+                        </div>
+                        <div class="form-group">
+                          <%= form.label :description %>
+                          <%= form.text_area :description, class: "form-control" %>
+                        </div>
+                        <div class="form-group">
+                          <%= form.submit "Update Session", class: "btn btn-primary" %>
+                        </div>
+                      <% end %>
                     </div>
-                    <div class="form-group">
-                      <%= form.label :end_time %>
-                      <%= form.datetime_select :end_time, class: "form-control" %>
-                    </div>
-                    <div class="form-group">
-                      <%= form.label :description %>
-                      <%= form.text_area :description, class: "form-control" %>
-                    </div>
-                    <div class="form-group">
-                      <%= form.submit "Update Session", class: "btn btn-primary" %>
-                    </div>
-                  <% end %>
-                </div>
-              </li>
-            <% end %>
-          </ul>
+                  </li>
+                <% end %>
+              </ul>
+          <% else %>
+            <p>No previous sessions recorded yet.</p>
+          <% end %>
         </div>
       </div>
     </div>

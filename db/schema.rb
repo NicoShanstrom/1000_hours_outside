@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_18_163651) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_31_013525) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension "pg_catalog.plpgsql"
+
+  create_table "challenges", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "year"
+    t.date "start_date"
+    t.date "end_date"
+    t.decimal "total_time", precision: 10, scale: 2, default: "0.0"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_challenges_on_user_id"
+  end
 
   create_table "outdoor_sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -22,6 +34,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_18_163651) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "challenge_id", null: false
+    t.index ["challenge_id"], name: "index_outdoor_sessions_on_challenge_id"
     t.index ["user_id"], name: "index_outdoor_sessions_on_user_id"
   end
 
@@ -33,9 +47,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_18_163651) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "username"
+    t.string "time_zone"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "challenges", "users"
+  add_foreign_key "outdoor_sessions", "challenges"
   add_foreign_key "outdoor_sessions", "users"
 end
