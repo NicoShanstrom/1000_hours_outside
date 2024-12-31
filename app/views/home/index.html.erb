@@ -98,44 +98,45 @@
 
       <div class="col-md-6" style="height: 400px; overflow-y: auto;">
         <div id="sessions" class="previous-sessions">
-          <h2>Previous Sessions</h2>
-          <% if @sessions.present? %>
-              <ul>
-                <% @sessions.each do |session| %>
-                  <li>
-                    <strong>Start:</strong> <%= session.start_time&.strftime("%B %d, %Y %I:%M %p") || "Not available" %>, 
-                    <strong>End:</strong> <%= session.end_time&.strftime("%B %d, %Y %I:%M %p") || "Not available" %>, 
-                    <strong>Duration:</strong> <%= session.duration || "Not calculated" %> hours, 
-                    <strong>Description:</strong> <%= session.description || "No description" %>
-                    <div class="mt-2">
-                      <%= form_with model: session, url: outdoor_session_path(session), method: :patch, local: true do |form| %>
-                        <div class="form-group">
-                          <%= form.label :start_time %>
-                          <%= form.datetime_select :start_time, class: "form-control" %>
-                        </div>
-                        <div class="form-group">
-                          <%= form.label :end_time %>
-                          <%= form.datetime_select :end_time, class: "form-control" %>
-                        </div>
-                        <div class="form-group">
-                          <%= form.label :description %>
-                          <%= form.text_area :description, class: "form-control" %>
-                        </div>
-                        <div class="form-group">
-                          <%= form.submit "Update Session", class: "btn btn-primary" %>
-                        </div>
-                      <% end %>
+        <h2>Previous Sessions</h2>
+        <% if @sessions.present? %>
+          <ul>
+            <% @sessions.each do |session| %>
+              <li>
+                <strong>Start:</strong> <%= session.start_time&.strftime("%B %d, %Y %I:%M %p") || "Not available" %>, 
+                <strong>End:</strong> <%= session.end_time&.strftime("%B %d, %Y %I:%M %p") || "Not available" %>, 
+                <strong>Duration:</strong> <%= session.duration || "Not calculated" %> hours, 
+                <strong>Description:</strong> <%= session.description || "No description" %>
+                <div class="mt-2">
+                  <%= form_with model: session, url: outdoor_session_path(session), method: :patch, local: true do |form| %>
+                    <div class="form-group">
+                      <%= form.label :start_time, "Start time" %>
+                      <%= form.datetime_select :start_time, default: session.start_time, class: "form-control" %>
                     </div>
-                    <%= form_with model: session, url: outdoor_session_path(session), method: :delete, data: { confirm: "Are you sure you want to delete this session?" }, local: true do %>
-                      <%= submit_tag "Delete", class: "btn btn-danger btn-sm" %>
-                    <% end %>
-                  </li>
+                    <div class="form-group">
+                      <%= form.label :end_time, "End time" %>
+                      <%= form.datetime_select :end_time, default: session.end_time, class: "form-control" %>
+                    </div>
+                    <div class="form-group">
+                      <%= form.label :description, "Description" %>
+                      <%= form.text_area :description, value: session.description, class: "form-control" %>
+                    </div>
+                    <div class="form-group">
+                      <%= form.submit "Update Session", class: "btn btn-primary" %>
+                    </div>
+                  <% end %>
+                </div>
+                <%= form_with model: session, url: outdoor_session_path(session), method: :delete, data: { confirm: "Are you sure you want to delete this session?" }, local: true do %>
+                  <%= submit_tag "Delete", class: "btn btn-danger btn-sm" %>
                 <% end %>
-              </ul>
-          <% else %>
-            <p>No previous sessions recorded yet.</p>
-          <% end %>
-        </div>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p>No previous sessions recorded yet.</p>
+        <% end %>
+      </div>
+
       </div>
     </div>
   <% else %>
