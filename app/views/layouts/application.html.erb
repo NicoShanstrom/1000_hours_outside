@@ -16,9 +16,25 @@
     <% if user_signed_in? %>
       <div class="d-flex justify-content-between align-items-center mb-4">
         <%= link_to 'Logout', destroy_user_session_path, data: { turbo_method: :delete }, id: "logout-link", class: 'btn btn-orange' %>
-        <p>Current Time Zone: <%= current_user.time_zone || "Not automatically set" %></p>
+        <% if current_user.time_zone.present? %>
+          <p>Current Time Zone: <%= current_user.time_zone %></p>
+        <% else %>
+          <div id="timezone-selection">
+            <p>Your time zone is not automatically set. Please select it manually:</p>
+            <%= form_with(url: "/set_time_zone", method: :post, local: true) do |form| %>
+              <div class="form-group">
+                <%= form.label :time_zone, "Select Your Time Zone" %>
+                <%= form.time_zone_select :time_zone, ActiveSupport::TimeZone.all, {}, class: "form-control" %>
+              </div>
+              <div class="form-group">
+                <%= form.submit "Save Time Zone", class: "btn btn-primary btn-sm" %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
       </div>
     <% end %>
+
     <%= render 'shared/flash_messages' %>
     <%= yield %>
   </div>

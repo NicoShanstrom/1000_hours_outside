@@ -1,4 +1,3 @@
-// app/javascript/application.js
 import "@hotwired/turbo-rails";
 import "controllers";
 
@@ -18,18 +17,21 @@ document.addEventListener("turbo:load", () => {
         body: JSON.stringify({ time_zone: timeZone }),
       })
         .then((response) => {
-          if (response.ok) {
-            console.log("Time zone updated successfully");
-          } else {
-            console.error("Failed to update time zone");
+          if (!response.ok) {
+            throw new Error(`Fetch failed with status: ${response.status}`);
           }
+          console.log("Time zone updated successfully");
         })
-        .catch((error) => console.error('Error updating time zone:', error));
+        .catch(() => {
+          // Show the fallback form if the request fails
+          document.getElementById("timezone-selection").style.display = "block";
+        });
     } else {
-      console.error("Time zone detection failed");
+      throw new Error("Time zone not detected");
     }
   } catch (error) {
-    console.error("Error in application.js:", error);
+    console.error("Error in time zone detection:", error);
+    // Show the fallback form if detection fails
+    document.getElementById("timezone-selection").style.display = "block";
   }
 });
-console.log("Application.js loaded"); // Debugging
