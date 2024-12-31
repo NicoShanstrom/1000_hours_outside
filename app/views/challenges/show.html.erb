@@ -1,0 +1,17 @@
+<h1>Challenge for <%= @challenge.year %></h1>
+<p>Total Time: <%= @challenge.total_time %> hours</p>
+<p>Start Date: <%= @challenge.start_date %></p>
+<p>End Date: <%= @challenge.end_date %></p>
+
+<h2>Outdoor Sessions</h2>
+<ul>
+  <% @outdoor_sessions.each do |session| %>
+    <li>
+      <strong>Start:</strong> <%= session.start_time %>,
+      <strong>Duration:</strong> <%= session.duration %> hours,
+      <strong>Description:</strong> <%= session.description %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "Back to Dashboard", root_path, class: "btn btn-primary" %>
