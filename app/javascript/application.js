@@ -2,6 +2,7 @@ import "@hotwired/turbo-rails";
 import "controllers";
 
 document.addEventListener("turbo:load", () => {
+  console.log("Turbo loaded, Stimulus controllers initialized.");
   try {
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
