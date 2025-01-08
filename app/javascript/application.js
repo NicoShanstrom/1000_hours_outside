@@ -22,23 +22,32 @@ document.addEventListener("turbo:load", () => {
             throw new Error(`Fetch failed with status: ${response.status}`);
           }
           console.log("Time zone updated successfully");
+
+          // Hide the manual selection element on success
+          const timezoneSelection = document.getElementById("timezone-selection");
+          if (timezoneSelection) {
+            timezoneSelection.style.display = "none";
+          }
         })
         .catch((error) => {
           console.error("Fetch API error:", error);
-          document.getElementById("timezone-selection").style.display = "block";
+
+          // Show manual selection fallback
+          const timezoneSelection = document.getElementById("timezone-selection");
+          if (timezoneSelection) {
+            timezoneSelection.style.display = "block";
+          }
         });
     } else {
       throw new Error("Time zone not detected");
     }
   } catch (error) {
     console.error("Error in time zone detection:", error);
-    document.getElementById("timezone-selection").style.display = "block";
-  }
-});
 
-// Add listeners for "click", "touchstart", and "touchend" events
-["click", "touchstart", "touchend"].forEach((eventType) => {
-  document.addEventListener(eventType, (event) => {
-    console.log(`Event detected: ${eventType}`, event);
-  });
+    // Show manual selection fallback
+    const timezoneSelection = document.getElementById("timezone-selection");
+    if (timezoneSelection) {
+      timezoneSelection.style.display = "block";
+    }
+  }
 });

@@ -7,14 +7,22 @@
 Rails.application.configure do
   config.content_security_policy do |policy|
     policy.default_src :self, :https
-    policy.font_src :self, :https, :data
-    policy.img_src :self, :https, :data
-    policy.object_src :none
-    policy.script_src :self, :https, -> { "'nonce-#{content_security_policy_nonce}'" }
-    policy.style_src :self, :https, :unsafe_inline
+    policy.font_src    :self, :https, :data
+    policy.img_src     :self, :https, :data
+    policy.object_src  :none
+    # Use a safe fallback if `content_security_policy_nonce` isn't available
+    policy.script_src  :self, :https, -> {
+      if respond_to?(:request) && request.respond_to?(:content_security_policy_nonce)
+        "'nonce-#{request.content_security_policy_nonce}'"
+      else
+        "'self'"
+      end
+    }
+    policy.style_src   :self, :https, :unsafe_inline
   end
 
-  # Enable nonce generation
-  config.content_security_policy_nonce_generator = ->(request) { SecureRandom.base64(16) }
+  # Enable nonce generation with a fallback
+  config.content_security_policy_nonce_generator = ->(req) { SecureRandom.base64(16) if req.respond_to?(:content_security_policy_nonce) }
   config.content_security_policy_nonce_directives = %w(script-src)
 end
+
