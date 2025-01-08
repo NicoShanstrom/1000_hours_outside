@@ -137,7 +137,8 @@
           <% end %>
         </div>
       </div>
-
+    </div>
+  <% else %>
     <h1>Welcome to the 1000 Hours Outside Challenge</h1>
     <p>Please <%= link_to "Sign Up", new_user_registration_path %> or <%= link_to "Login", new_user_session_path %> to start tracking your outdoor time.</p>
   <% end %>
