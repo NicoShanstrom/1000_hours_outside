@@ -6,7 +6,8 @@
   <%= csp_meta_tag %>
 
   <!-- Importmap must be loaded before any module scripts -->
-  <%= javascript_importmap_tags %>
+  <%= javascript_importmap_tags + "?v=#{Rails.application.config.assets.version}" %>
+
 
   <!-- Stylesheets -->
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>

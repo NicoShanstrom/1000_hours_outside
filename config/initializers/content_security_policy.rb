@@ -10,7 +10,7 @@ Rails.application.configure do
     policy.font_src    :self, :https, :data
     policy.img_src     :self, :https, :data
     policy.object_src  :none
-    policy.script_src  :self, "https://one000-outside-hours.onrender.com", :unsafe_inline
+    policy.script_src :self, :https, "'unsafe-inline'", "'nonce-#{SecureRandom.base64(16)}'"
     policy.style_src   :self, :unsafe_inline, :https
     # Specify URI for violation reports (optional)
     # policy.report_uri "/csp-violation-report-endpoint"
