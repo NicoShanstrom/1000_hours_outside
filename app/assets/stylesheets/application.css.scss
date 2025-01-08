@@ -7,13 +7,43 @@
   top: 10px;
   right: 10px;
   z-index: 1050;
-  max-width: 300px;
+  max-width: 90%;
+  /* Adjust for smaller screen sizes */
+  padding: 0 10px;
 }
 
 .flash-message {
   transition: opacity 1s ease-in-out;
+  background-color: #f8d7da;
+  /* Light red for error flash */
+  color: #721c24;
+  /* Dark red text for better visibility */
+  border: 1px solid #f5c6cb;
+  /* Border to match the background */
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Slight shadow for visibility */
 }
 
 .flash-message.fade-out {
   opacity: 0;
+}
+
+@media (max-width: 576px) {
+
+  /* Responsive styles for small screens */
+  .flash-container {
+    top: 20px;
+    /* Provide more room at the top */
+    right: 5px;
+    left: 5px;
+    /* Center the flash messages */
+  }
+
+  .flash-message {
+    font-size: 0.9rem;
+    /* Slightly smaller font on mobile */
+  }
 }
