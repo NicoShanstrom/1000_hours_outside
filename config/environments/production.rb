@@ -65,7 +65,8 @@ Rails.application.configure do
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
   config.assets.debug = true
   config.assets.digest = true
-  config.assets.js_compressor = :uglifier
+  config.assets.js_compressor = :terser
+
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
