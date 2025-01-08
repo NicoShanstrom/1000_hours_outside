@@ -22,14 +22,14 @@
           <p id="timezone-display">Current Time Zone: <%= current_user.time_zone %></p>
         <% else %>
           <div id="timezone-selection">
-            <p>Your time zone is not automatically set. Please select it manually:</p>
+            <p>We couldn't detect your time zone. Please select it manually:</p>
             <%= form_with(url: "/set_time_zone", method: :post, local: true) do |form| %>
               <div class="form-group">
                 <%= form.label :time_zone, "Select Your Time Zone" %>
                 <%= form.time_zone_select :time_zone, ActiveSupport::TimeZone.all, {}, class: "form-control" %>
               </div>
               <div class="form-group">
-                <%= form.submit "Save Time Zone", class: "btn btn-primary btn-sm" %>
+                <%= form.submit "Save Time Zone", class: "btn btn-primary" %>
               </div>
             <% end %>
           </div>
