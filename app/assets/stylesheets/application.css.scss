@@ -1,6 +1,12 @@
 // Import Bootstrap
 @import "bootstrap";
 
+/* Add a class for the styles */
+.previous-sessions-container {
+  height: 400px;
+  overflow-y: auto;
+}
+
 // Flash message styles
 .flash-container {
   position: fixed;
