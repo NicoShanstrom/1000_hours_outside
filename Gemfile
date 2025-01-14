@@ -47,8 +47,8 @@ gem "bootsnap", require: false
 
 #use devise gem to impliment user authentication
 gem 'devise'
-gem 'bootstrap'
-gem 'popper_js'
+# gem 'bootstrap'
+# gem 'popper_js'
 # gem 'jquery-rails'
 gem 'dartsass-sprockets'
 gem 'sassc'
