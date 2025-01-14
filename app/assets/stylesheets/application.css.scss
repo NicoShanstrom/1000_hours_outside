@@ -10,8 +10,27 @@
 }
 
 .previous-sessions-container {
-  height: 400px;
+  max-height: 400px;
+  /* Restrict the height of the container */
   overflow-y: auto;
+  /* Add vertical scrolling for overflowing content */
+  border: 1px solid #ccc;
+  /* Optional: Add a border for better visual separation */
+  padding: 10px;
+  /* Optional: Add padding for better spacing */
+
+  ul.session-list {
+    overflow-y: auto;
+    /* Enable vertical scrolling for overflowing content */
+    max-height: 400px;
+    /* Limit the height of the ul */
+    margin: 0;
+    /* Remove default margin */
+    padding: 0;
+    /* Remove default padding */
+    list-style: none;
+    /* Remove bullet points */
+  }
 }
 
 // Flash message styles

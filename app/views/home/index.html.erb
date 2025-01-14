@@ -100,7 +100,7 @@
         <div id="sessions" class="previous-sessions">
           <h2>Previous Sessions</h2>
           <% if @sessions.present? %>
-            <ul>
+            <ul class="session-list">
               <% @sessions.each do |session| %>
                 <li>
                   <strong>Start:</strong> <%= session.start_time&.in_time_zone(current_user.time_zone || "UTC")&.strftime("%B %d, %Y %I:%M %p") || "Not available" %>,
