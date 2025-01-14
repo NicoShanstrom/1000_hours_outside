@@ -10,7 +10,7 @@
 }
 
 .previous-sessions-container {
-  max-height: 400px;
+  max-height: 550px;
   /* Restrict the height of the container */
   overflow-y: auto;
   /* Add vertical scrolling for overflowing content */
@@ -22,7 +22,7 @@
   ul.session-list {
     overflow-y: auto;
     /* Enable vertical scrolling for overflowing content */
-    max-height: 400px;
+    max-height: 550px;
     /* Limit the height of the ul */
     margin: 0;
     /* Remove default margin */
