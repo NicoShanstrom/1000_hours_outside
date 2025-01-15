@@ -1,22 +1,47 @@
-// Container for sessions
-#sessions-container {
-  max-height: 400px; // Adjust as needed
-  overflow-y: auto; // Enable scrolling for large content
-  border: 1px solid #ccc; // Add border for better visibility
-  padding: 10px; // Add padding for spacing
-  display: none; // Default hidden
+// Container for previous sessions
+.previous-sessions-wrapper {
+  margin-bottom: 20px; // Add spacing below the wrapper if needed
 }
 
-// Bootstrap collapse classes
+.previous-sessions-container {
+  max-height: 500px; // Restrict height
+  overflow-y: auto; // Enable vertical scrolling
+  border: 1px solid #ccc; // Add border for visual separation
+  padding: 10px; // Add padding inside the container
+}
+
+.session-list {
+  margin: 0; // Remove default margin
+  padding: 0; // Remove default padding
+  list-style: none; // Remove bullet points
+}
+
+.session-list li {
+  margin-bottom: 10px; // Add spacing between session items
+}
+
+.session-list .btn-danger {
+  margin-top: 10px; // Add spacing above delete button
+}
+
+// Scrollable container for outdoor sessions in show.html.erb
+.scrollable-container {
+  max-height: 400px; // Restrict height for scrolling
+  overflow-y: auto; // Enable vertical scrolling
+  border: 1px solid #ccc; // Add border for better separation
+  padding: 10px; // Add padding for spacing
+}
+
+// Collapse functionality
 .collapse {
-  display: none;
+  display: none; // Bootstrap default
 }
 
 .collapse.show {
-  display: block;
+  display: block; // Visible when expanded
 }
 
-// Custom button styling
+// Button styling
 .btn-orange {
   background-color: #ff8c00; // Orange background
   color: #000; // Black text
@@ -28,7 +53,7 @@
   }
 }
 
-// Flash messages
+// Flash message styling
 .flash-container {
   position: fixed;
   top: 10px;

@@ -5,17 +5,17 @@
 
 <h2>Outdoor Sessions</h2>
 <button
-  class="btn btn-secondary mb-2"
+  class="btn btn-secondary mb-2 toggle-sessions-btn"
   type="button"
   data-bs-toggle="collapse"
   data-bs-target="#sessions-container"
   aria-expanded="false"
   aria-controls="sessions-container">
-  Expand Sessions
+  Show Sessions
 </button>
 
-<div id="sessions-container" class="collapse">
-  <ul>
+<div id="sessions-container" class="collapse scrollable-container">
+  <ul class="session-list">
     <% @outdoor_sessions.each do |session| %>
       <li>
         <strong>Start:</strong> <%= session.start_time %>,
