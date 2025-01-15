@@ -1,10 +1,32 @@
-// Container for sessions
-#sessions-container {
-  max-height: 400px; // Adjust as needed
-  overflow-y: auto; // Enable scrolling for large content
-  border: 1px solid #ccc; // Add border for better visibility
-  padding: 10px; // Add padding for spacing
-  display: none; // Default hidden
+.previous-sessions-wrapper {
+  margin-bottom: 20px; // Add spacing below the wrapper if needed
+}
+
+// .previous-sessions-title {
+//   margin-bottom: 10px; // Add spacing below the title
+//   font-size: 1.5rem; // Make the title prominent
+//   font-weight: bold; // Emphasize the title
+// }
+
+.previous-sessions-container {
+  max-height: 500px; // Restrict height
+  overflow-y: auto; // Enable vertical scrolling
+  border: 1px solid #ccc; // Add border for visual separation
+  padding: 10px; // Add padding inside the container
+}
+
+.session-list {
+  margin: 0; // Remove default margin
+  padding: 0; // Remove default padding
+  list-style: none; // Remove bullet points
+}
+
+.session-list li {
+  margin-bottom: 10px; // Add spacing between session items
+}
+
+.session-list .btn-danger {
+  margin-top: 10px; // Add spacing above delete button
 }
 
 // Bootstrap collapse classes
