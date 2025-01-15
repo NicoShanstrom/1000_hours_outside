@@ -10,12 +10,10 @@ Rails.application.configure do
     policy.font_src :self, :https, :data
     policy.img_src :self, :https, :data
     policy.object_src :none
-    policy.script_src :self, :https, :unsafe_inline, :unsafe_eval
-    # Allow inline styles and styles from jsdelivr.net (Bootstrap CDN)
-    policy.style_src :self, :https, :unsafe_inline, "https://cdn.jsdelivr.net"
+    policy.script_src :self, :https, :unsafe_eval
+    policy.style_src :self, :https, :unsafe_inline
   end
 
-  # Enable nonce generation
   config.content_security_policy_nonce_generator = ->(request) { SecureRandom.base64(16) }
   config.content_security_policy_nonce_directives = %w(script-src style-src)
 end

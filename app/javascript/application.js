@@ -25,19 +25,21 @@ document.addEventListener("turbo:load", () => {
       })
       .catch((error) => {
         console.error("Fetch API error:", error);
-        document.getElementById("timezone-selection").style.display = "block";
+        const timezoneSelection = document.getElementById("timezone-selection");
+        if (timezoneSelection) timezoneSelection.style.display = "block";
       });
   } catch (error) {
     console.error("Error in time zone detection:", error);
-    document.getElementById("timezone-selection").style.display = "block";
+    const timezoneSelection = document.getElementById("timezone-selection");
+    if (timezoneSelection) timezoneSelection.style.display = "block";
   }
 
   // Initialize Bootstrap Dropdowns
-  const dropdownElements = document.querySelectorAll('.dropdown-toggle');
+  const dropdownElements = document.querySelectorAll(".dropdown-toggle");
   dropdownElements.forEach((dropdown) => {
     console.log("Initializing dropdown:", dropdown);
-
-    // Use global Bootstrap instance to initialize
     new bootstrap.Dropdown(dropdown);
   });
+
+  console.log("Bootstrap initialized.");
 });
