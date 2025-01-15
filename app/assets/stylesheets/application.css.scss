@@ -1,12 +1,7 @@
+// Container for previous sessions
 .previous-sessions-wrapper {
   margin-bottom: 20px; // Add spacing below the wrapper if needed
 }
-
-// .previous-sessions-title {
-//   margin-bottom: 10px; // Add spacing below the title
-//   font-size: 1.5rem; // Make the title prominent
-//   font-weight: bold; // Emphasize the title
-// }
 
 .previous-sessions-container {
   max-height: 500px; // Restrict height
@@ -29,16 +24,24 @@
   margin-top: 10px; // Add spacing above delete button
 }
 
-// Bootstrap collapse classes
+// Scrollable container for outdoor sessions in show.html.erb
+.scrollable-container {
+  max-height: 400px; // Restrict height for scrolling
+  overflow-y: auto; // Enable vertical scrolling
+  border: 1px solid #ccc; // Add border for better separation
+  padding: 10px; // Add padding for spacing
+}
+
+// Collapse functionality
 .collapse {
-  display: none;
+  display: none; // Bootstrap default
 }
 
 .collapse.show {
-  display: block;
+  display: block; // Visible when expanded
 }
 
-// Custom button styling
+// Button styling
 .btn-orange {
   background-color: #ff8c00; // Orange background
   color: #000; // Black text
@@ -50,7 +53,7 @@
   }
 }
 
-// Flash messages
+// Flash message styling
 .flash-container {
   position: fixed;
   top: 10px;

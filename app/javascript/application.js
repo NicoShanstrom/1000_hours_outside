@@ -42,4 +42,22 @@ document.addEventListener("turbo:load", () => {
   });
 
   console.log("Bootstrap initialized.");
+
+  // Toggle visibility of sessions in challenges/show.html.erb
+  const toggleButton = document.querySelector(".btn-secondary");
+  const sessionsContainer = document.querySelector("#sessions-container");
+
+  if (toggleButton && sessionsContainer) {
+    toggleButton.addEventListener("click", () => {
+      const isExpanded = sessionsContainer.classList.contains("show");
+
+      // Toggle button text
+      toggleButton.textContent = isExpanded ? "Show Sessions" : "Hide Sessions";
+
+      // Ensure smooth scrolling
+      if (!isExpanded) {
+        sessionsContainer.scrollTop = 0; // Scroll to top when showing sessions
+      }
+    });
+  }
 });
