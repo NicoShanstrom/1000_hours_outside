@@ -9,6 +9,9 @@ Rails.application.routes.draw do
 
   post 'set_time_zone', to: 'time_zones#set_time_zone'
 
+  # Serve the service worker
+  # get "/serviceworker.js", to: "service_workers#index"
+
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
