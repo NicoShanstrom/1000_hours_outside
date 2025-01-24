@@ -162,7 +162,7 @@ document.addEventListener("turbo:load", () => {
       const cachedChallenges = await db.challenges.toArray();
       renderChallenges(cachedChallenges); // Function to render challenges in UI
     } else {
-      const response = await fetch("/challenges");
+      const response = await fetch(`/challenges/${challenge.id}`);
       if (response.ok) {
         const challenges = await response.json();
         await db.challenges.bulkPut(challenges.map((c) => ({ ...c, synced: true })));
