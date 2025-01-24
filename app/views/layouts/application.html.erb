@@ -43,10 +43,13 @@
           <% end %>
         </div>
         <div id="timezone-display">
+          <!-- Display User Email -->
+          <p class="mb-1">User Email: <%= current_user.email %></p>
+          <!-- Display Detected User Time Zone -->
           <% if current_user.time_zone.present? %>
-            <p>Current Time Zone: <%= current_user.time_zone %></p>
+            <p class="mt-1">User Time Zone: <%= current_user.time_zone %></p>
           <% else %>
-            <!-- Time Zone Selection Form -->
+            <!-- Time Zone Selection Form if time zone is not autodetected by javascript -->
             <div id="timezone-selection">
               <p>We couldn't detect your time zone. Please select it manually:</p>
               <%= form_with(url: "/set_time_zone", method: :post, local: true) do |form| %>
