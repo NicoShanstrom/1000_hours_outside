@@ -16,29 +16,38 @@ class OutdoorSessionsController < ApplicationController
     else
       flash[:alert] = @outdoor_session.errors.full_messages.to_sentence
     end
+
     redirect_to root_path
   end
 
   def update
-    @outdoor_session = current_user.outdoor_sessions.find(params[:id])
+    begin
+      @outdoor_session = current_user.outdoor_sessions.find(params[:id])
 
-    if params[:outdoor_session][:stop_timer] == "true"
-      update_params = {
-        end_time: Time.current,
-        duration: ((Time.current - @outdoor_session.start_time) / 1.hour).round(2),
-        description: params[:outdoor_session][:description]
-      }
-      success_message = "Outdoor session ended successfully"
-    else
-      update_params = outdoor_session_params
-      success_message = "Outdoor session updated successfully"
+      if params[:outdoor_session][:stop_timer] == "true"
+        update_params = {
+          end_time: Time.current,
+          duration: ((Time.current - @outdoor_session.start_time) / 1.hour).round(2),
+          description: params[:outdoor_session][:description]
+        }
+        success_message = "Outdoor session ended successfully"
+      else
+        update_params = outdoor_session_params
+        success_message = "Outdoor session updated successfully"
+      end
+
+      if @outdoor_session.update(update_params)
+        # Reset current session if the timer is stopped
+        @current_session = nil if params[:outdoor_session][:stop_timer] == "true"
+        flash[:notice] = success_message
+      else
+        flash[:alert] = @outdoor_session.errors.full_messages.to_sentence
+      end
+    rescue ActiveRecord::RecordNotFound
+      @current_session = nil # Explicitly reset current session
+      flash[:alert] = "The session you are trying to update no longer exists."
     end
 
-    if @outdoor_session.update(update_params)
-      flash[:notice] = success_message
-    else
-      flash[:alert] = @outdoor_session.errors.full_messages.to_sentence
-    end
     redirect_to root_path
   end
 

@@ -1,3 +1,4 @@
+// application.js
 import "@hotwired/turbo-rails";
 import "controllers";
 import "bootstrap"; // Import Bootstrap (ensure it's globally available)
@@ -7,8 +8,7 @@ const Dexie = window.Dexie; // Assign Dexie from the global window object
 // Initialize IndexedDB database at the top level
 const db = new Dexie("OfflineDB");
 db.version(1).stores({
-  sessions: "++id, start_time, end_time, duration, description, synced",
-  challenges: "++id, year, start_date, end_date, synced"
+  sessions: "++id, start_time, end_time, duration, description, synced"
 });
 
 // Export the database so it can be used elsewhere
@@ -55,24 +55,6 @@ document.addEventListener("turbo:load", () => {
 
   console.log("Bootstrap initialized.");
 
-  // Toggle visibility of sessions in challenges/show.html.erb
-  const toggleButton = document.querySelector(".btn-secondary");
-  const sessionsContainer = document.querySelector("#sessions-container");
-
-  if (toggleButton && sessionsContainer) {
-    toggleButton.addEventListener("click", () => {
-      const isExpanded = sessionsContainer.classList.contains("show");
-
-      // Toggle button text
-      toggleButton.textContent = isExpanded ? "Show Sessions" : "Hide Sessions";
-
-      // Ensure smooth scrolling
-      if (!isExpanded) {
-        sessionsContainer.scrollTop = 0; // Scroll to top when showing sessions
-      }
-    });
-  }
-
   // Register service worker
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker
@@ -85,7 +67,7 @@ document.addEventListener("turbo:load", () => {
       });
   }
 
-  // Offline session handling (Step 2)
+  // Offline session handling
   const isOnline = () => navigator.onLine;
 
   const startTimerForm = document.getElementById("start-timer-form");
@@ -125,7 +107,7 @@ document.addEventListener("turbo:load", () => {
     });
   }
 
-  // Sync offline data when back online (Step 3)
+  // Sync offline data when back online
   const syncData = async () => {
     if (!navigator.onLine) return;
 
@@ -155,21 +137,4 @@ document.addEventListener("turbo:load", () => {
   };
 
   window.addEventListener("online", syncData);
-
-  // Fetch challenges (Step 4)
-  const fetchChallenges = async () => {
-    if (!navigator.onLine) {
-      const cachedChallenges = await db.challenges.toArray();
-      renderChallenges(cachedChallenges); // Function to render challenges in UI
-    } else {
-      const response = await fetch(`/challenges/${challenge.id}`);
-      if (response.ok) {
-        const challenges = await response.json();
-        await db.challenges.bulkPut(challenges.map((c) => ({ ...c, synced: true })));
-        renderChallenges(challenges);
-      }
-    }
-  };
-
-  document.addEventListener("turbo:load", fetchChallenges);
 });
