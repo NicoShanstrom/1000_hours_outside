@@ -1,8 +1,8 @@
-// application.js
 import "@hotwired/turbo-rails";
 import "controllers";
-import "bootstrap"; // Import Bootstrap (ensure it's globally available)
-import "dexie"; // Import Dexie globally from the CDN
+import "bootstrap";
+import "dexie";
+
 const Dexie = window.Dexie; // Assign Dexie from the global window object
 
 // Initialize IndexedDB database at the top level
