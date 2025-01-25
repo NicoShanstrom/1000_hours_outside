@@ -1,56 +1,20 @@
-// Container for previous sessions
-.previous-sessions-wrapper {
-  margin-bottom: 20px; // Add spacing below the wrapper if needed
-}
-
-.previous-sessions-container {
-  max-height: 500px; // Restrict height
-  overflow-y: auto; // Enable vertical scrolling
-  border: 1px solid #ccc; // Add border for visual separation
-  padding: 10px; // Add padding inside the container
-}
-
-.session-list {
-  margin: 0; // Remove default margin
-  padding: 0; // Remove default padding
-  list-style: none; // Remove bullet points
-}
-
-.session-list li {
-  margin-bottom: 10px; // Add spacing between session items
-}
-
-.session-list .btn-danger {
-  margin-top: 10px; // Add spacing above delete button
-}
-
-// Scrollable container for outdoor sessions in show.html.erb
-.scrollable-container {
-  max-height: 400px; // Restrict height for scrolling
-  overflow-y: auto; // Enable vertical scrolling
-  border: 1px solid #ccc; // Add border for better separation
-  padding: 10px; // Add padding for spacing
-}
-
-// Collapse functionality
-.collapse {
-  display: none; // Bootstrap default
-}
-
-.collapse.show {
-  display: block; // Visible when expanded
-}
-
-// Button styling
-.btn-orange {
-  background-color: #ff8c00; // Orange background
-  color: #000; // Black text
-  border: none; // Remove border
-
-  &:hover {
-    background-color: #e67e22; // Darker orange on hover
-    color: #000; // Ensure text remains black
-  }
+// Styling for the Timer Form Buttons (Start/Stop)
+#start-timer-form .btn-success,
+#stop-timer-form .btn-danger {
+  display: block;
+  /* Ensures the button takes up the block width */
+  width: 100%;
+  /* Full width for the row */
+  font-size: 1.5rem;
+  /* Larger font for emphasis */
+  padding: 10px 0;
+  /* Vertical padding for button height */
+  text-align: center;
+  /* Center-align text */
+  margin: 0 auto;
+  /* Center the button horizontally */
+  border-radius: 5px;
+  /* Add rounded corners for better aesthetics */
 }
 
 // Flash message styling
@@ -65,17 +29,72 @@
 
 .flash-message {
   transition: opacity 1s ease-in-out;
-  background-color: #f8d7da; // Light red background
-  color: #721c24; // Dark red text
-  border: 1px solid #f5c6cb; // Red border
+  background-color: #f8d7da;
+  /* Light red background */
+  color: #721c24;
+  /* Dark red text */
+  border: 1px solid #f5c6cb;
+  /* Red border */
   border-radius: 5px;
   padding: 10px 15px;
   margin-bottom: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-  &.fade-out {
-    opacity: 0;
-  }
+.flash-message.fade-out {
+  opacity: 0;
+}
+
+// Container for previous sessions
+.previous-sessions-wrapper {
+  margin-bottom: 20px;
+  /* Add spacing below the wrapper */
+}
+
+.previous-sessions-container {
+  max-height: 500px;
+  /* Restrict height */
+  overflow-y: auto;
+  /* Enable vertical scrolling */
+  border: 1px solid #ccc;
+  /* Add border for separation */
+  padding: 10px;
+  /* Add padding inside the container */
+  border-radius: 5px;
+  /* Rounded corners */
+}
+
+.session-list {
+  margin: 0;
+  /* Remove default margin */
+  padding: 0;
+  /* Remove default padding */
+  list-style: none;
+  /* Remove bullet points */
+}
+
+.session-list li {
+  margin-bottom: 10px;
+  /* Add spacing between session items */
+}
+
+.session-list .btn-danger {
+  margin-top: 10px;
+  /* Add spacing above delete button */
+}
+
+// Scrollable container for outdoor sessions
+.scrollable-container {
+  max-height: 400px;
+  /* Restrict height for scrolling */
+  overflow-y: auto;
+  /* Enable vertical scrolling */
+  border: 1px solid #ccc;
+  /* Add border for better separation */
+  padding: 10px;
+  /* Add padding for spacing */
+  border-radius: 5px;
+  /* Add rounded corners for aesthetics */
 }
 
 // Timezone display
@@ -84,12 +103,8 @@
   top: 10px;
   right: 20px;
   font-size: 14px;
-  color: #333; // Neutral text color
-}
-
-// Timezone selection form
-#timezone-selection {
-  margin-top: 20px;
+  color: #333;
+  /* Neutral text color */
 }
 
 // Responsive styles

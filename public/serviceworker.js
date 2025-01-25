@@ -8,7 +8,6 @@ const urlsToCache = [
   "/images/1000_hours_outdoors_tracker_icon_512x512.png" // Now in `public/images/`
 ];
 
-
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -20,11 +19,24 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
-  );
+  const { request } = event;
+
+  // Only cache GET requests
+  if (request.method === "GET") {
+    event.respondWith(
+      caches.match(request).then((response) => {
+        return response || fetch(request).then((networkResponse) => {
+          if (networkResponse && networkResponse.ok) {
+            return caches.open(CACHE_NAME).then((cache) => {
+              cache.put(request, networkResponse.clone());
+              return networkResponse;
+            });
+          }
+          return networkResponse;
+        });
+      })
+    );
+  }
 });
 
 self.addEventListener("activate", (event) => {
@@ -33,6 +45,7 @@ self.addEventListener("activate", (event) => {
       return Promise.all(
         keyList.map((key) => {
           if (key !== CACHE_NAME) {
+            console.log(`Deleting old cache: ${key}`);
             return caches.delete(key);
           }
         })
